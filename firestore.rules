@@ -1,0 +1,123 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && 
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+    }
+
+    function isVendor() {
+      return isAuthenticated() && 
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'vendor';
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isVendorOwner(vendorId) {
+      return isAuthenticated() && 
+        exists(/databases/$(database)/documents/vendors/$(vendorId)) &&
+        get(/databases/$(database)/documents/vendors/$(vendorId)).data.userId == request.auth.uid;
+    }
+
+    // User profiles
+    match /users/{userId} {
+      allow read: if isAuthenticated() && (isOwner(userId) || isVendor() || isAdmin());
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated() && (isOwner(userId) || isAdmin());
+      allow delete: if isAdmin();
+      
+      // Allow admins to update wallet
+      allow update: if isAdmin() && 
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['wallet']) &&
+        request.resource.data.wallet.coins >= 0;
+    }
+    
+    // Vendors
+    match /vendors/{vendorId} {
+      allow read: if true;
+      allow create: if isAuthenticated() || isAdmin();
+      allow update: if isAuthenticated() && (
+        resource.data.userId == request.auth.uid || 
+        request.resource.data.userId == request.auth.uid ||
+        // Allow rating updates when feedback is added
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['rating', 'ratingCount']) ||
+        // Allow admin to update vendor status
+        isAdmin()
+      );
+      allow delete: if isAdmin();
+    }
+    
+    // Services
+    match /services/{serviceId} {
+      allow read: if true;
+      allow create: if isAuthenticated() && (isVendor() || isAdmin());
+      allow update, delete: if isAuthenticated() && (isVendorOwner(resource.data.vendorId) || isAdmin());
+    }
+
+    // Service Categories
+    match /service_categories/{categoryId} {
+      allow read: if true;
+      allow create: if isAuthenticated() && (isVendor() || isAdmin());
+      allow update, delete: if isAuthenticated() && (isVendorOwner(resource.data.vendorId) || isAdmin());
+    }
+    
+    // Offers
+    match /offers/{offerId} {
+      allow read: if true;
+      allow create: if isAuthenticated() && (isVendor() || isAdmin());
+      allow update, delete: if isAuthenticated() && (
+        isVendorOwner(resource.data.vendorId) || 
+        isAdmin()
+      );
+    }
+    
+    // Appointments
+    match /appointments/{appointmentId} {
+      allow read: if isAuthenticated() && (
+        request.auth.uid == resource.data.customerId || 
+        isVendorOwner(resource.data.vendorId) ||
+        isAdmin()
+      );
+      allow create: if isAuthenticated();
+      allow update, delete: if isAuthenticated() && (
+        request.auth.uid == resource.data.customerId || 
+        isVendorOwner(resource.data.vendorId) ||
+        isAdmin()
+      ) || (
+        // Allow vendors to update appointment status
+        isVendorOwner(resource.data.vendorId) &&
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status'])
+      ) || (
+        // Allow customers to add feedback to their own completed appointments
+        request.auth.uid == resource.data.customerId &&
+        resource.data.status == 'completed' &&
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['feedback', 'updatedAt'])
+      );
+    }
+
+    // Support tickets
+    match /support_tickets/{ticketId} {
+      allow read: if isAuthenticated() && (
+        request.auth.uid == resource.data.userId || 
+        isAdmin()
+      );
+      allow create: if isAuthenticated();
+      allow update: if isAuthenticated() && (
+        (request.auth.uid == resource.data.userId && 
+         request.resource.data.diff(resource.data).affectedKeys().hasOnly(['responses', 'updatedAt'])) ||
+        (isAdmin() && 
+         request.resource.data.diff(resource.data).affectedKeys().hasOnly(['responses', 'updatedAt', 'status']))
+      );
+      allow delete: if isAdmin();
+    }
+  }
+}

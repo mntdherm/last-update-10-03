@@ -1,0 +1,702 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Rest of your existing CSS */
+
+/* Modern iOS-style smooth transitions */
+* {
+  -webkit-tap-highlight-color: transparent;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+/* Smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* iOS-style button active state */
+.ios-btn-active:active {
+  transform: scale(0.97);
+  transition: transform 0.1s ease;
+}
+
+/* Bilo text styles */
+.bilo-text {
+  background: linear-gradient(45deg, #C0C0C0, #A0A0A0, #808080, #606060);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradientAnimation 8s ease infinite;
+}
+
+@keyframes gradientAnimation {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Changing word animation */
+.changing-word {
+  display: inline-block;
+  min-width: 80px;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.changing-word::after {
+  content: attr(data-word);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  animation: slideUp 3s infinite;
+}
+
+@keyframes slideUp {
+  0%, 10% { transform: translateY(100%); opacity: 0; }
+  20%, 80% { transform: translateY(0); opacity: 1; }
+  90%, 100% { transform: translateY(-100%); opacity: 0; }
+}
+
+/* Quick pulse animation for icons */
+@keyframes quickPulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.animate-pulse-quick {
+  animation: quickPulse 1s ease-in-out;
+}
+
+/* New animations for login page */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from { transform: translateY(-10px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.animate-slideDown {
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Shimmer loading effect */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.animate-shimmer {
+  animation: shimmer 2s infinite linear;
+}
+
+/* Slide animations for city items */
+@keyframes slideRight {
+  0% { transform: translateX(-10px); opacity: 0.7; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+.animate-slide-right {
+  animation: slideRight 0.5s ease-out;
+}
+
+@keyframes slideLeft {
+  0% { transform: translateX(10px); opacity: 0.7; }
+  100% { transform: translateX(0); opacity: 1; }
+}
+
+.animate-slide-left {
+  animation: slideLeft 0.5s ease-out;
+}
+
+.active\:scale-95:active {
+  transform: scale(0.95);
+}
+
+.active\:scale-98:active {
+  transform: scale(0.98);
+}
+
+/* Prevent background scroll */
+.no-scroll {
+  overflow: hidden;
+  padding-right: 15px; /* Prevent layout shift when scrollbar disappears */
+}
+
+/* Prevent background scroll */
+.no-scroll {
+  overflow: hidden;
+  padding-right: 15px; /* Prevent layout shift when scrollbar disappears */
+}
+
+/* Input focus animation */
+.focus-within\:shadow-outline:focus-within {
+  box-shadow: 0 0 0 3px rgba(192, 192, 192, 0.5);
+}
+
+/* Silver button styles */
+.silver-button {
+  background-color: #C0C0C0;
+  color: #2C3E50;
+  transition: all 0.3s ease;
+}
+
+.silver-button:hover {
+  background-color: #B0B0B0;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.silver-button:focus {
+  box-shadow: 0 0 0 3px rgba(192, 192, 192, 0.5);
+}
+
+.silver-button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Glow effect on hover */
+.silver-button:hover::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #C0C0C0, #A0A0A0);
+  filter: blur(5px);
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.silver-button:hover::after {
+  opacity: 1;
+}
+
+/* Form field focus animation */
+input:focus, select:focus, textarea:focus {
+  transform: translateY(-2px);
+  transition: all 0.3s ease;
+}
+
+/* Error message animation */
+@keyframes errorShake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}
+
+.error-shake {
+  animation: errorShake 0.6s;
+}
+
+/* Floating label animation */
+.floating-label {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: white;
+  padding: 0 4px;
+  transition: all 0.3s ease;
+  pointer-events: none;
+}
+
+input:focus ~ .floating-label,
+input:not(:placeholder-shown) ~ .floating-label {
+  top: 0;
+  font-size: 12px;
+  color: #C0C0C0;
+}
+
+/* Page Transitions */
+.page-transition {
+  position: relative;
+  min-height: 100vh;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.page-transition.forward {
+  animation: slideLeft 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.page-transition.backward {
+  animation: slideRight 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideRight {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Hide scrollbar but keep functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
+/* New color scheme utility classes */
+.bg-bilo-silver {
+  background-color: #C0C0C0;
+}
+
+.bg-bilo-navy {
+  background-color: #2C3E50;
+}
+
+.bg-bilo-emerald {
+  background-color: #2ECC71;
+}
+
+.bg-bilo-gray {
+  background-color: #F2F2F2;
+}
+
+.text-bilo-silver {
+  color: #C0C0C0;
+}
+
+.text-bilo-navy {
+  color: #2C3E50;
+}
+
+.text-bilo-emerald {
+  color: #2ECC71;
+}
+
+.hover\:bg-bilo-silver:hover {
+  background-color: #C0C0C0;
+}
+
+.hover\:bg-bilo-navy:hover {
+  background-color: #2C3E50;
+}
+
+.hover\:bg-bilo-emerald:hover {
+  background-color: #2ECC71;
+}
+
+.hover\:bg-bilo-gray:hover {
+  background-color: #F2F2F2;
+}
+
+.hover\:text-bilo-silver:hover {
+  color: #C0C0C0;
+}
+
+.hover\:text-bilo-navy:hover {
+  color: #2C3E50;
+}
+
+.hover\:text-bilo-emerald:hover {
+  color: #2ECC71;
+}
+
+.focus\:ring-bilo-silver:focus {
+  --tw-ring-color: #C0C0C0;
+}
+
+.focus\:ring-bilo-navy:focus {
+  --tw-ring-color: #2C3E50;
+}
+
+.focus\:ring-bilo-emerald:focus {
+  --tw-ring-color: #2ECC71;
+}
+
+.border-bilo-silver {
+  border-color: #C0C0C0;
+}
+
+.border-bilo-navy {
+  border-color: #2C3E50;
+}
+
+.border-bilo-emerald {
+  border-color: #2ECC71;
+}
+
+.border-bilo-gray {
+  border-color: #F2F2F2;
+}
+
+/* New loading spinner animations */
+@keyframes pulse {
+  0% { transform: scale(0.95); opacity: 0.7; }
+  50% { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(0.95); opacity: 0.7; }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes orbit {
+  0% { transform: rotate(0deg) translateY(-140%) translateX(-50%); }
+  100% { transform: rotate(360deg) translateY(-140%) translateX(-50%); }
+}
+
+@keyframes fadeInOut {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+@keyframes textFade {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.min-h-6 {
+  min-height: 1.5rem;
+}
+
+.min-h-8 {
+  min-height: 2rem;
+}
+
+.min-w-40 {
+  min-width: 10rem;
+}
+
+.backdrop-blur-sm {
+  backdrop-filter: blur(4px);
+}
+
+/* Vendor profile specific animations */
+@keyframes floatUp {
+  0% { transform: translateY(10px); opacity: 0; }
+  100% { transform: translateY(0); opacity: 1; }
+}
+
+.animate-float-up {
+  animation: floatUp 0.5s ease-out forwards;
+}
+
+@keyframes scaleIn {
+  0% { transform: scale(0.9); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s ease-out forwards;
+}
+
+/* Parallax effect utilities */
+.parallax-slow {
+  transition: transform 0.5s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.parallax-medium {
+  transition: transform 0.3s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+.parallax-fast {
+  transition: transform 0.2s cubic-bezier(0.33, 1, 0.68, 1);
+}
+
+/* Service card hover effects */
+.service-card-hover {
+  transition: all 0.3s ease;
+}
+
+.service-card-hover:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+/* Discount badge animation */
+@keyframes rotateIn {
+  0% { transform: rotate(45deg) scale(0); }
+  100% { transform: rotate(45deg) scale(1); }
+}
+
+.animate-rotate-in {
+  animation: rotateIn 0.5s ease-out forwards;
+}
+
+/* Scroll indicator */
+.scroll-mt-24 {
+  scroll-margin-top: 6rem;
+}
+
+/* iOS-style button styles */
+.ios-button {
+  background: linear-gradient(to bottom, rgba(255,255,255,0.8), rgba(240,240,240,0.8));
+  border: 1px solid rgba(0,0,0,0.1);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.8);
+  border-radius: 9999px;
+  transition: all 0.2s ease;
+  -webkit-font-smoothing: antialiased;
+}
+
+.ios-button:active {
+  background: linear-gradient(to bottom, rgba(240,240,240,0.9), rgba(230,230,230,0.9));
+  box-shadow: 0 1px 1px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.5);
+  transform: translateY(1px);
+}
+
+.ios-button-active {
+  background: linear-gradient(to bottom, rgba(230,230,230,1), rgba(210,210,210,1));
+  box-shadow: 0 1px 1px rgba(0,0,0,0.05), inset 0 1px 0 rgba(255,255,255,0.5);
+  color: rgba(0,0,0,0.8);
+  font-weight: 500;
+}
+
+/* iOS-style glass effect */
+.ios-glass {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Booking Modal Animations */
+@keyframes modalSlideIn {
+  from { 
+    transform: translateY(30px) scale(0.95);
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  to { 
+    transform: translateY(0) scale(1);
+    opacity: 1;
+    backdrop-filter: blur(8px);
+  }
+}
+
+@keyframes stepTransition {
+  from { 
+    transform: translateX(20px) scale(0.98);
+    opacity: 0;
+  }
+  to { 
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes checkmarkDraw {
+  0% { stroke-dashoffset: 100; }
+  100% { stroke-dashoffset: 0; }
+}
+
+@keyframes progressLine {
+  from { width: 0%; opacity: 0; }
+  to { width: 100%; opacity: 1; }
+}
+
+@keyframes stepIconPop {
+  0% { transform: scale(0.8); opacity: 0; }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.booking-modal {
+  @apply fixed inset-0 bg-black/30 backdrop-blur-[8px] flex items-center justify-center p-4 z-50;
+  animation: modalSlideIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.booking-modal-content {
+  @apply bg-white/95 backdrop-blur-xl rounded-2xl w-full max-w-lg max-h-[90vh] overflow-hidden flex flex-col;
+  box-shadow: 0 10px 40px -10px rgba(0,0,0,0.2);
+  transform-origin: center center;
+}
+
+.step-icon {
+  @apply w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300;
+  animation: stepIconPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.step-icon.active {
+  @apply bg-blue-50 text-blue-600 ring-2 ring-blue-200 scale-110;
+  box-shadow: 0 2px 8px -2px rgba(59, 130, 246, 0.3);
+}
+
+.step-line {
+  @apply h-0.5 bg-gray-200 flex-1 mx-2 my-4 rounded-full overflow-hidden;
+}
+
+.step-line.active::after {
+  content: '';
+  @apply block h-full bg-blue-500;
+  animation: progressLine 0.6s ease-out forwards;
+}
+
+.booking-input {
+  @apply w-full px-4 py-3 rounded-xl border-2 border-transparent bg-gray-50
+    focus:border-blue-500 focus:ring-2 focus:ring-blue-100 focus:bg-white
+    hover:bg-gray-100 transition-all duration-300;
+}
+
+.booking-button {
+  @apply px-6 py-3 rounded-xl font-medium transform transition-all duration-300
+    hover:shadow-lg active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2;
+}
+
+.booking-button-primary {
+  @apply bg-gradient-to-r from-blue-500 to-blue-600 text-white
+    hover:from-blue-600 hover:to-blue-700;
+}
+
+.booking-button-secondary {
+  @apply bg-gray-100 text-gray-700 hover:bg-gray-200;
+}
+
+.modal-animation {
+  animation: modalSlideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.step-animation {
+  animation: stepTransition 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.checkmark-animation {
+  stroke-dasharray: 100;
+  stroke-dashoffset: 100;
+  animation: checkmarkDraw 0.6s ease forwards;
+}
+
+/* Modern Input Styles */
+.modern-input {
+  @apply w-full px-4 py-3 bg-gray-50 border-2 border-transparent rounded-xl 
+    focus:border-blue-500 focus:ring-2 focus:ring-blue-200 focus:bg-white
+    transition-all duration-300;
+}
+
+.modern-input::placeholder {
+  @apply text-gray-400 transition-opacity duration-200;
+}
+
+.modern-input:focus::placeholder {
+  @apply opacity-0;
+}
+
+/* Progress Bar Animation */
+.progress-step {
+  @apply relative flex items-center justify-center w-8 h-8 rounded-full 
+    transition-all duration-300 transform;
+}
+
+.progress-step.active {
+  @apply bg-blue-100 text-blue-600 scale-110 shadow-md;
+}
+
+.progress-step.completed {
+  @apply bg-green-100 text-green-600;
+}
+
+.progress-line {
+  @apply absolute top-1/2 -right-full w-full h-0.5 bg-gray-200
+    transform -translate-y-1/2 transition-all duration-300;
+}
+
+.progress-line.active {
+  @apply bg-blue-500;
+}
+
+/* Modern Button Styles */
+.modern-button {
+  @apply px-6 py-3 rounded-xl font-medium transform transition-all duration-300
+    hover:shadow-lg active:scale-95 focus:outline-none focus:ring-2 focus:ring-offset-2;
+}
+
+/* Next Step Button Animation */
+@keyframes silverShine {
+  0% {
+    background-position: 200% center;
+    box-shadow: 0 0 0 rgba(192, 192, 192, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(192, 192, 192, 0.6);
+  }
+  100% {
+    background-position: -200% center;
+    box-shadow: 0 0 0 rgba(192, 192, 192, 0.4);
+  }
+}
+
+.next-step-button {
+  background: linear-gradient(
+    90deg,
+    #e2e2e2 0%,
+    #C0C0C0 25%,
+    #e2e2e2 50%,
+    #C0C0C0 75%,
+    #e2e2e2 100%
+  );
+  background-size: 200% auto;
+  animation: silverShine 3s linear infinite;
+  position: relative;
+  overflow: hidden;
+}
+
+.next-step-button::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.next-step-button:hover::after {
+  transform: translateX(100%);
+}
+.modern-button-primary {
+  @apply bg-gradient-to-r from-blue-500 to-blue-600 text-white
+    hover:from-blue-600 hover:to-blue-700;
+}
+
+.modern-button-secondary {
+  @apply bg-gray-100 text-gray-700 hover:bg-gray-200;
+}

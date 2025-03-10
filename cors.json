@@ -1,0 +1,7 @@
+[
+  {
+    "origin": ["https://bilo.fi", "https://*.bilo.fi"],
+    "method": ["GET", "POST", "PUT", "DELETE"],
+    "maxAgeSeconds": 3600
+  }
+]

@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /vendor-dashboard
+Disallow: /vendor-calendar
+Disallow: /vendor-offers
+Disallow: /vendor-settings
+Disallow: /customer/profile
+Disallow: /customer/coins
+Disallow: /customer/appointments
+
+Sitemap: https://bilo.fi/sitemap.xml
